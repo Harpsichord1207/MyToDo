@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>MyToDo</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .side-bar{
+            position: absolute;
+            width: 20%;
+            height: 100%;
+            border-right: 1px solid gainsboro;
+        }
+        .todo-list{
+            position: absolute;
+            left: 20%;
+            width: 80%;
+            height: 100%;
+        }
+        .todo-list-header{
+            position: absolute;
+            height: 25%;
+            width: 100%;
+            background: #6f6aea;
+        }
+        .todo-list-content{
+            position: absolute;
+            width: 100%;
+            top: 25%;
+            height: 65%;
+            background: #46b8da;
+            overflow-y: auto;
+        }
+        .todo-list-add{
+            position: absolute;
+            width: 100%;
+            top: 90%;
+            height: 10%;
+        }
+    </style>
+</head>
+<body>
+<div class="side-bar">
+    <div class="side-bar-user">
+        <img src="" alt="Logo">
+        <span>搜索</span>
+    </div>
+    <div class="side-bar-category">
+        <div>所有</div>
+        <div>已完成</div>
+        <div>未完成</div>
+    </div>
+</div>
+<div class="todo-list">
+    <div class="todo-list-header">
+
+    </div>
+    <div class="todo-list-content">
+
+    </div>
+    <div class="todo-list-add">
+        <p>
+            <span>+</span>
+            <span>添加待办事项</span>
+        </p>
+    </div>
+</div>
+</body>
+</html>
