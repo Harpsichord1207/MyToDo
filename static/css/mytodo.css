@@ -1,0 +1,14 @@
+
+.todo-groups{
+    border: 1px solid skyblue;
+    width: 25%;
+    height: 100%;
+    position: absolute;
+}
+
+.todo-content{
+    left: 25%;
+    width: 75%;
+    height: 100%;
+    position: absolute;
+}
