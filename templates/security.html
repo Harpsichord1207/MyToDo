@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>MyTodo</title>
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+<div id="nav-bar">
+    <a href="{{ url_for('page_home') }}"><img src="/static/images/logo2.png"></a>
+</div>
+<div id="main-area">
+    <h3>重置密码</h3>
+    <form method="post" action="/mail/">
+        <input type="text" class="form-control" placeholder="邮箱" required name="eml">
+        <button class="btn btn-primary">发送邮件</button>
+        <hr/>
+        <h2 style="text-align: center;padding-top: 20px">广告位招租</h2>
+    </form>
+</div>
+{% if get_flashed_messages() %}
+    {% for msg in get_flashed_messages() %}
+        {% if 'OK' in msg %}
+            <h4 class="alert alert-info" role="alert">注册成功，请登录</h4>
+        {% else %}
+            <h4 class="alert alert-danger" role="alert">{{ msg }}</h4>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+</body>
+</html>

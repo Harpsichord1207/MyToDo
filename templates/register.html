@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>MyTodo</title>
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+<div id="nav-bar">
+    <a href="{{ url_for('page_home') }}"><img src="/static/images/logo2.png"></a>
+</div>
+<div id="main-area">
+    <h3>注册</h3>
+    <form method="post">
+        <input type="text" class="form-control" placeholder="用户名" required name="eml">
+        <input type="password" class="form-control" placeholder="密码" required autocomplete="" name="psw1">
+        <input type="password" class="form-control" placeholder="确认密码" required autocomplete="" name="psw2">
+        <button class="btn btn-primary">注册</button>
+        <div>
+            <span><a href="{{ url_for('page_login') }}">已有账号登录</a></span>
+        </div>
+    </form>
+</div>
+{% if get_flashed_messages() %}
+    {% for msg in get_flashed_messages() %}
+        <h4 class="alert alert-danger" role="alert">{{ msg }}</h4>
+    {% endfor %}
+{% endif %}
+</body>
+</html>

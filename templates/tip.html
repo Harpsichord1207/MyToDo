@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>MyTodo</title>
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <style>
+        #main-area{
+            overflow: hidden;
+        }
+        .informs{
+            height: 100px;
+            margin: 20px;
+            padding: 5px;
+            border: 1px solid cornflowerblue;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        p.key-message{
+            color: #225599;
+        }
+    </style>
+</head>
+<body>
+<div id="nav-bar">
+    <a href="{{ url_for('page_home') }}"><img src="/static/images/logo2.png"></a>
+</div>
+<div id="main-area">
+    <div class="informs">
+    <p style="margin: 5px">
+        <p class="key-message">{{ tip }}</p>
+        <p><span id="timer">5</span>秒后将自动跳转</p>
+    </p>
+    <div class="jump-button" style="position: relative;bottom: 10px">
+        <button type="submit" class="btn btn-default pull-right" onclick="location='{{ url_for(target) }}'">立即跳转</button>
+    </div>
+    </div>
+    <hr/>
+    <h2 style="text-align: center;padding-top: 20px">广告位招租</h2>
+</div>
+<script src="{{ url_for('static',filename='javascript/timer.js') }}"></script>
+<script type="text/javascript">timetojump(5,"{{ url_for(target) }}");</script>
+</body>
+</html>

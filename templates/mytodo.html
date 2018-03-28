@@ -7,68 +7,112 @@
     <link rel="stylesheet" href="/static/css/mytodo.css">
     <title>MyToDo</title>
 </head>
-<div ng-controller="MainCtrl">
+<body ng-controller="MainCtrl">
 
-<div class="todo-groups">
-    <div>
-        <img src="">
-        <div class="input-group">
-        <input type="text" class="form-control" placeholder="Key Word">
-        <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Search</button>
-      </span>
+<div id="mytodo-sidebar">
+    <div id="mytodo-sidebar-logo">
+        <img src="/static/images/logo2.png">
     </div>
-    </div>
-    <ul class="list-group">
-        <li class="list-group-item">清单</li>
-        <li class="list-group-item">清单</li>
-        <li class="list-group-item">清单</li>
-        <li class="list-group-item">清单</li>
-        <li class="list-group-item"><span class="badge">14/30</span>清单</li>
-    </ul>
-    <button class="btn btn-info">新建清单</button>
-</div>
+        <div class="input-group" id="mytodo-sidebar-search">
+            <input type="text" class="form-control" placeholder="搜索" id="search_key_word">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" ng-click="search_todo()">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+            </span>
+        </div>
 
-<div class="todo-content">
-<div><input class="form-control"></div>
-
-<div>
-    <ul class="list-group">
-        <li class="list-group-item">待办</li>
-        <li class="list-group-item">待办</li>
-        <li class="list-group-item">待办</li>
-        <li class="list-group-item">待办</li>
-        <li class="list-group-item">待办</li>
-    </ul>
-</div>
-
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li>
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
+    <hr/>
+    {% raw %}
+    <ul class="list-group" id="mytodo-sidebar-category" ng-cloak>
+        <li class="list-group-item repeat-finish" ng-click="change_category($event.target)"
+            ng-repeat="category in categories" id="category{{ category.id }}">
+            <span class="badge">{{ category.completed_todo }}/{{ category.total_todo }}</span>{{ category.name }}
         </li>
     </ul>
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="输入页码">
-        <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
-      </span>
+    {% endraw %}
+    <hr>
+    <div id="mytodo-logout">
+        <a href="{{ url_for('page_logout') }}"><span class="glyphicon glyphicon-off"></span> 注销</a>
     </div>
-</nav>
+    <button class="btn btn-info pull-right" id="mytodo-sidebar-btn" ng-click="add_category()" ng-disabled="categories.length>9">
+        新建清单
+    </button>
+</div>
 
-<div><input class="form-control"></div>
+<div id="mytodo-content">
+    <div id="mytodo-content-header">
+        <input type="text" class="form-control" id="active_category_name_input" ng-model="active_category_name" ng-disabled="search_status">
+        <button class="btn btn-danger pull-right" type="button" ng-click="change_delete_status()" ng-disabled="search_status">删除清单
+        </button>
+        <button class="btn btn-primary pull-right" type="button" ng-click="change_sort_type(2)" id="sort_btn_2">↓</button>
+        <button class="btn btn-primary pull-right" type="button" ng-click="change_sort_type(1)" id="sort_btn_1">创建时间</button>
+
+
+    </div>
+    <div class="input-group" id="mytodo-content-add">
+        <input type="text" class="form-control" id="todo_content_input" ng-keyup="add_todo_enter($event)" placeholder="添加待办事项">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="add_todo()" ng-disabled="search_status">添加/Enter</button>
+        </span>
+    </div>
+    <div id="mytodo-content-list">
+        {% raw %}
+        <ul class="list-group" ng-cloak>
+            <li class="list-group-item" ng-repeat="todo in current_todos" id="todo{{ todo.id }}">
+                <div class="mytodo-todo-status-ico">
+                    <span ng-class="{true:'glyphicon glyphicon-ok-circle',false:'glyphicon glyphicon-time'}[todo.status]" aria-hidden="true" ng-click="change_todo_status($event.target,todo)"></span>
+                </div>
+                <div class="mytodo-content-todo-content" ng-class="{true:'completed'}[todo.status]">
+                    <span>{{ todo.content }}</span>
+                </div>
+                <button class="btn-warning btn btn-xs" ng-click="delete_todo(todo)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <span class="mytodo-content-todo-time">{{ todo.create_time }}</span>
+            </li>
+        </ul>
+        {% endraw %}
+    </div>
+    <div id="mytodo-content-page">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a aria-label="Previous" ng-click="change_page('previous')">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% raw %}
+            <li>
+                <a>
+                    {{ current_page }} of {{ current_total_page }}
+                </a>
+            </li>
+            {% endraw %}
+            <li>
+                <a aria-label="Next" ng-click="change_page('next')">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li>
+
+                    <span aria-hidden="true"><input id="page_input" value="1"></span>
+
+            </li>
+            <li>
+                <a aria-label="Next" ng-click="change_page('page')">
+                    <span aria-hidden="true">GO</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</div>
+
+<delete-waring></delete-waring>
+
+<div id="mytodo-cover" ng-show="delete_warning_status">
+
 </div>
 
 

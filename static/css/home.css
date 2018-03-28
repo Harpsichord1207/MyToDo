@@ -1,0 +1,18 @@
+body{
+    background-size: 100%;
+}
+
+.logo-div{
+    margin: 20px auto;
+    width: 1200px;
+}
+
+
+.logo{
+    width: 200px;
+}
+
+.btn{
+    margin: 5px 10px;
+    width: 100px;
+}

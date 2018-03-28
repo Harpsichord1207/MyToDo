@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>MyTodo</title>
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/home.css">
+</head>
+<body background="{{ url_for('static', filename='images/background.jpg') }}">
+<div class="logo-div">
+    <img class="logo" src="{{ url_for('static', filename='images/logo2.png') }}"/>
+    <button class="btn btn-lg pull-right btn-info" onclick="location={{ url_for('page_register') }}">注册</button>
+    <button class="btn btn-lg pull-right btn-warning" onclick="location={{ url_for('page_login') }}">登录</button>
+</div>
+</body>
+</html>
