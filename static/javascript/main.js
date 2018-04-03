@@ -128,6 +128,7 @@ myapp.controller("MainCtrl", ["$http", "$scope", function ($http, $scope) {
         }).then(function (value) {
             if (value.statusText === "OK"){
                 $scope.category_added = true;
+                $scope.search_status = false;
                 var new_category = {
                     "id": value.data.id,
                     "name": "我的清单",
@@ -143,8 +144,6 @@ myapp.controller("MainCtrl", ["$http", "$scope", function ($http, $scope) {
                 $scope.current_todos = [];
                 $scope.current_page = 1;
                 $scope.current_total_page = 1;
-                document.getElementById("active_category_name_input").focus();
-                // document.getElementById("active_category_name_input").select();
             }
         })
     };
@@ -362,6 +361,7 @@ myapp.directive("repeatFinish", ["$timeout", function ($timeout) {
                     scope.set_category_added();
                     $timeout(function () {
                         element[0].classList.add("active");
+                        document.getElementById("active_category_name_input").focus();
                     }, 10);
                 } else {
                     if (scope.search_status === false) {
