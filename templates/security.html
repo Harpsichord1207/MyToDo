@@ -22,11 +22,7 @@
 </div>
 {% if get_flashed_messages() %}
     {% for msg in get_flashed_messages() %}
-        {% if 'OK' in msg %}
-            <h4 class="alert alert-info" role="alert">注册成功，请登录</h4>
-        {% else %}
-            <h4 class="alert alert-danger" role="alert">{{ msg }}</h4>
-        {% endif %}
+        <h4 class="alert alert-danger" role="alert">{{ msg }}</h4>
     {% endfor %}
 {% endif %}
 </body>

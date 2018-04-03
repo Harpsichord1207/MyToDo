@@ -20,7 +20,7 @@ myapp.controller("MainCtrl", ["$http", "$scope", function ($http, $scope) {
 
     // -----------------------------------------------------------------------------
     // When page is loaded, get all categories, and get all todos in first category/page
-    window.onload = function () {
+    $scope.init = function () {
         $http({
             method: "GET",
             url: "/category/get/"
@@ -124,16 +124,13 @@ myapp.controller("MainCtrl", ["$http", "$scope", function ($http, $scope) {
     $scope.add_category = function () {
         $http({
             method: "POST",
-            url: "/category/add/",
-            data: {
-                "name": "My Todo List"
-            }
+            url: "/category/add/"
         }).then(function (value) {
             if (value.statusText === "OK"){
                 $scope.category_added = true;
                 var new_category = {
                     "id": value.data.id,
-                    "name": "My Todo List",
+                    "name": "我的清单",
                     "total_todo": 0,
                     "completed_todo": 0,
                     "page": 1
@@ -142,7 +139,7 @@ myapp.controller("MainCtrl", ["$http", "$scope", function ($http, $scope) {
                 var current_category = document.getElementById("category"+$scope.active_category.id);
                 if (current_category){current_category.classList.remove("active")}
                 $scope.active_category = new_category;
-                $scope.active_category_name = "My Todo List";
+                $scope.active_category_name = "我的清单";
                 $scope.current_todos = [];
                 $scope.current_page = 1;
                 $scope.current_total_page = 1;
@@ -201,6 +198,7 @@ myapp.controller("MainCtrl", ["$http", "$scope", function ($http, $scope) {
                         $scope.categories.splice(i, 1);
                     }
                 }
+                $scope.delete_warning_status = false;
                 $scope.active_category = $scope.categories[0];
                 $scope.active_category_name = $scope.active_category.name;
                 $scope.get_todo($scope.active_category.id, 1, $scope.current_sort_type);
@@ -209,7 +207,6 @@ myapp.controller("MainCtrl", ["$http", "$scope", function ($http, $scope) {
                 console.log(current_category);
                 current_category.classList.add("active");
                 document.getElementById("todo_content_input").focus();
-                $scope.delete_warning_status = false;
             }
         })
     };

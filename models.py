@@ -174,9 +174,9 @@ def get_category(user):
     return dumps(orm_normalize(categories, 'category'), ensure_ascii=False)
 
 
-def add_category(user_id, name):
+def add_category(user_id):
     if len(Categories.query.filter(Categories.user_id == user_id, Categories.deleted == 0).all()) < 10:
-        category = Categories(user_id=user_id, name=name)
+        category = Categories(user_id=user_id, name="我的清单")
         db.session.add(category)
         db.session.commit()
         return dumps({'id': category.id}, ensure_ascii=False)
@@ -193,7 +193,7 @@ def edit_category(user_id, category_id, name):
 
 def delete_category(user_id, category_id):
     category = Categories.query.filter(Categories.id == category_id, Categories.user_id == user_id).first()
-    if category:
+    if category and len(Categories.query.filter(Categories.deleted == 0, Categories.user_id == user_id).all()) > 1:
         category.deleted = 1
         for todo in category.todos:
             todo.deleted = 1

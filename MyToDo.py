@@ -167,10 +167,7 @@ def api_add_todo():
 @app.route('/category/add/', methods=['POST'])
 @login_required
 def api_add_category():
-    form_data = loads(request.get_data().decode('utf-8'))
-    name = form_data.get('name', '')
-    if len(name) > 0:
-        return add_category(current_user.id, name)
+    return add_category(current_user.id)
 
 
 @app.route('/todo/edit/', methods=['POST'])
